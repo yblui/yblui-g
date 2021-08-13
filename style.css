@@ -1,0 +1,41 @@
+*{
+    transition: 0.9s;
+}
+div:first-of-type{
+    width:100%;
+    line-height: 1;
+}
+div:first-of-type:hover{
+    line-height: 3;
+}
+div {
+    color: white;
+    background-color: #005B85;
+    width:calc(50% - 4px);
+    display: inline-block;
+    text-align: center;
+    line-height: 9;
+    height:20%;
+    border:solid 2px white;
+}
+
+div:hover {
+    background-color: white;
+    color:#005B85;
+    font-weight: bold;
+    height:60%;
+    line-height: 23;
+}
+h1{
+    font-weight: normal;
+}
+body{
+    background-color: #eee;
+    margin:0;
+    overflow: hidden;
+}
+a{
+    text-decoration: none;
+    color:gray;
+    font-size: 90pt;
+}

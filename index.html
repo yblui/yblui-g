@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="favicon.png" />
+    <meta name="discription" content="Yblui-g Minesweeper" />
 </head>
 
 <body>
@@ -15,17 +17,22 @@
         <div class="head">
             <h1>Yblui-g</h1>
         </div>
-        <div>简单(10x10)</div><div>中等(20x20)</div>
-        <div>困难(30x40)</div><div onclick="chas('custom');">自定义</div>
+        <div onclick="goto(10,10,10)">简单(10x10)</div><div onclick="goto(20,20,40)">中等(20x20)</div>
+        <div onclick="goto(30,40,120)">困难(30x40)</div><div onclick="chas('custom');">自定义</div>
     </div>
     <div class="cont cust">
         <div class="head">
             <h1>自定义</h1>
         </div>
-        <div onclick="chas('')">返回到主页</div><div>长度</div>
-        <div>宽度</div><div>确定</div>
+        <div onclick="chas('')">返回到主页</div><div class="ctin">长度<br /><input type="number" min="9" max="40" value="9" id="len" /></div>
+        <div class="ctin">宽度<br /><input type="number" min="9" max="40" value="9" id="wdt" /></div><div class="ctin">雷数<br /><input type="number" value="10" id="mine" /></div>
+        <div onclick="goto(document.getElementById('len').value,document.getElementById('wdt').value,document
+            .getElementById('mine').value);">确定</div>
     </div>
-    <a href="https://yblui.github.io">Yblui.github.io</a>
+    <div class="cont game">
+        <div onclick="chas('')">返回到主页</div>
+    </div>
+    <span>Yblui.github.io</span>
     <script src="script.js"></script>
 </body>
 

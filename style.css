@@ -15,12 +15,14 @@
 div:not(.cont) {
     color: white;
     background-color: #005B85;
-    width: calc(50% - 4px);
+    width: calc(50% - 22px);
     display: inline-block;
     text-align: center;
-    line-height: 9;
+    line-height: 8;
     height: 20%;
     border: solid 2px white;
+    padding: 9px;
+    vertical-align: middle;
 }
 
 div:not(.cont):hover {
@@ -37,26 +39,46 @@ body {
     background-color: #eee;
     margin: 0;
     overflow: hidden;
-    animation:anim 0.9s;
+    animation: anim 0.9s;
 }
 
-a {
-    text-decoration: none;
+span {
     color: gray;
     font-size: 90pt;
+    position: fixed;
+    bottom: 0;
+    z-index: -1;
 }
 
-.cust {
+.cont:not(.main) {
     display: none;
 }
 
 @keyframes anim {
-    from{
+    from {
         transform: translateY(-100%);
-        opacity:0;
+        opacity: 0;
     }
-    to{
+    to {
         transform: translateY(0);
-        opacity:1;
+        opacity: 1;
     }
+}
+
+input {
+    font-size: 30pt;
+    border-bottom: solid #008bcc;
+    border-width: 0 0 2px 0;
+    background-color: #005B85;
+    color: white;
+    font-family: "Microsoft Yahei", 'Segoe UI', sans-serif;
+}
+
+.ctin {
+    line-height: 1!important;
+    text-align: left!important;
+}
+
+html, body, .cont {
+    height: 100%;
 }

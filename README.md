@@ -1,2 +1,2 @@
-# yblui-g
- yblui-g
+# Yblui-g
+Yblui-g

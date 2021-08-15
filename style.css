@@ -4,25 +4,21 @@
 
 .head {
     width: 100%!important;
-    line-height: 1!important;
 }
 
 .head:hover {
     height: 60%!important;
-    line-height: 3!important;
 }
 
 div:not(.cont) {
     color: white;
     background-color: #005B85;
-    width: calc(50% - 22px);
-    display: inline-block;
-    text-align: center;
-    line-height: 8;
-    height: 20%;
     border: solid 2px white;
+}
+
+div:not(.cont):not(.grid) {
+    height: 20%;
     padding: 9px;
-    vertical-align: middle;
 }
 
 div:not(.cont):hover {
@@ -38,7 +34,6 @@ h1 {
 body {
     background-color: #eee;
     margin: 0;
-    overflow: hidden;
     animation: anim 0.9s;
 }
 
@@ -52,6 +47,25 @@ span {
 
 .cont:not(.main) {
     display: none;
+}
+
+.main {
+    display: flex;
+}
+
+.cont:not(.game) {
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.cont:not(.game) div {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    min-width: 400px;
+    align-items: center;
 }
 
 @keyframes anim {
@@ -75,10 +89,40 @@ input {
 }
 
 .ctin {
-    line-height: 1!important;
     text-align: left!important;
 }
 
 html, body, .cont {
     height: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+    border-left: solid 2px white;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #005b85;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #008bcc;
+}
+
+.grid {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    font-size: 30px;
+    text-align: center;
+}
+
+.cfed {
+    background-color: #fa3744!important;
+}
+
+.cfed:hover {
+    color: white!important;
 }

@@ -1,2 +1,2 @@
 # Yblui-g
-Yblui-g
+Yblui-g Minesweeper

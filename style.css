@@ -1,5 +1,14 @@
+.blue{
+    --theme:#005B85;
+    --theme-light:#008BCC;
+}
+.green{
+    --theme:#818A48;
+    --theme-light:#b2c43c;
+}
 * {
     transition: 0.9s;
+    user-select: none;
 }
 
 .head {
@@ -10,20 +19,28 @@
     height: 60%!important;
 }
 
-div:not(.cont) {
+div:not(.cont, .flex) {
     color: white;
-    background-color: #005B85;
+    background-color: var(--theme);
     border: solid 2px white;
 }
 
-div:not(.cont):not(.grid) {
+div:not(.cont, .grid, .flex) {
     height: 20%;
     padding: 9px;
 }
 
+.flex {
+    padding: 0!important;
+    height: 40%!important;
+}
+
+.flex div{
+    height:50%
+}
 div:not(.cont):hover {
     background-color: white;
-    color: #005B85;
+    color: var(--theme);
     font-weight: bold;
 }
 
@@ -38,6 +55,10 @@ body {
 }
 
 span {
+    font-size: 30pt;
+}
+
+#link {
     color: gray;
     font-size: 90pt;
     position: fixed;
@@ -49,17 +70,17 @@ span {
     display: none;
 }
 
-.main {
+.main, .flex {
     display: flex;
 }
 
-.cont:not(.game) {
+.cont:not(.game), .flex {
     flex-wrap: wrap;
     flex-direction: row;
     align-content: flex-start;
 }
 
-.cont:not(.game) div {
+.cont:not(.game) div, .flex div {
     flex-grow: 1;
     display: flex;
     justify-content: space-around;
@@ -81,9 +102,9 @@ span {
 
 input {
     font-size: 30pt;
-    border-bottom: solid #008bcc;
+    border-bottom: solid var(--theme-light);
     border-width: 0 0 2px 0;
-    background-color: #005B85;
+    background-color: var(--theme);
     color: white;
     font-family: "Microsoft Yahei", 'Segoe UI', sans-serif;
 }
@@ -102,11 +123,11 @@ html, body, .cont {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #005b85;
+    background-color: var(--theme);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #008bcc;
+    background-color: var(--theme-light);
 }
 
 .grid {
@@ -120,7 +141,7 @@ html, body, .cont {
 }
 
 .cfed {
-    background-color: #fa3744!important;
+    background-color: #FA3744!important;
 }
 
 .cfed:hover {

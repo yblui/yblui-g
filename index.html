@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="blue">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <meta name="description" content="Yblui-g Minesweeper" />
 </head>
 
-<body>
+<body oncontextmenu="return false;">
     <div class="cont main">
         <div class="head">
             <h1>Yblui-g</h1>
@@ -21,24 +21,50 @@
         <div onclick="goto(20,20,40)">中等(20x20)</div>
         <div onclick="goto(30,40,120)">困难(30x40)</div>
         <div onclick="chas('custom');">自定义</div>
+        <div onclick="chas('theme');">主题设置</div>
     </div>
     <div class="cont cust">
         <div class="head">
             <h1>自定义</h1>
         </div>
         <div onclick="chas('')">返回到主页</div>
-        <div class="ctin">长度<br /><input type="number" min="9" max="40" value="9" id="len" oninput="qdmi();" /></div>
-        <div class="ctin">宽度<br /><input type="number" min="9" max="40" value="9" id="wdt" oninput="qdmi();" /></div>
-        <div class="ctin">雷数<br /><input type="number" value="10" id="mine" min="1" max="81" /></div>
-        <div onclick="goto(document.getElementById('len').value,document.getElementById('wdt').value,document
-            .getElementById('mine').value);">确定</div>
+        <div class="ctin">
+            <label>
+                长度<br />
+                <input type="number" min="9" max="40" value="9" id="len" oninput="qdmi();" />
+            </label>
+        </div>
+        <div class="ctin">
+            <label>
+                宽度<br />
+                <input type="number" min="9" max="30" value="9" id="wdt" oninput="qdmi();" />
+            </label>
+        </div>
+        <div class="ctin">
+            <label>
+                雷数<br />
+                <input type="number" value="10" id="mine" min="1" max="81" />
+            </label>
+        </div>
+        <div onclick="goto(document.getElementById('len').value,document.getElementById('wdt').value,document.getElementById('mine').value);">确定</div>
     </div>
     <div class="cont game">
-        <div onclick="chas('');">返回到主页</div>
-        <div>剩余雷数</div>
-        <div>用时</div>
+        <div class="flex">
+            <div onclick="chas('');">返回到主页</div>
+            <div>剩余雷数<span id="syls"></span></div>
+            <div>用时<span id="time">0s</span></div>
+            <div onclick="history.go(0);">新游戏</div>
+        </div>
     </div>
-    <span>Yblui.github.io</span>
+    <div class="cont them">
+        <div class="head">
+            <h1>主题设置</h1>
+        </div>
+        <div onclick="chas('');">返回到主页</div>
+        <div onclick="cthe(false)">蓝色（默认）</div>
+        <div onclick="cthe(true)">绿色</div>
+    </div>
+    <span id="link">Yblui.github.io</span>
     <script src="script.js"></script>
 </body>
 

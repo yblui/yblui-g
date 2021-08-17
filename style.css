@@ -1,11 +1,13 @@
-.blue{
-    --theme:#005B85;
-    --theme-light:#008BCC;
+.blue {
+    --theme: #005B85;
+    --theme-light: #008BCC;
 }
-.green{
-    --theme:#818A48;
-    --theme-light:#b2c43c;
+
+.green {
+    --theme: #466E48;
+    --theme-light: #509C53;
 }
+
 * {
     transition: 0.9s;
     user-select: none;
@@ -35,9 +37,10 @@ div:not(.cont, .grid, .flex) {
     height: 40%!important;
 }
 
-.flex div{
-    height:50%
+.flex div {
+    height: 50%;
 }
+
 div:not(.cont):hover {
     background-color: white;
     color: var(--theme);
@@ -146,4 +149,12 @@ html, body, .cont {
 
 .cfed:hover {
     color: white!important;
+}
+
+.modl {
+    display: none;
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+    width:100%
 }

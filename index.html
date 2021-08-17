@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="favicon.png" />
     <meta name="description" content="Yblui-g Minesweeper" />
+    <link rel="manifest" href="manifest.json" />
 </head>
 
 <body oncontextmenu="return false;">
@@ -17,9 +18,9 @@
         <div class="head">
             <h1>Yblui-g</h1>
         </div>
-        <div onclick="goto(10,10,10)">简单(10x10)</div>
-        <div onclick="goto(20,20,40)">中等(20x20)</div>
-        <div onclick="goto(30,40,120)">困难(30x40)</div>
+        <div onclick="goto(10,10,10);">简单(10x10)</div>
+        <div onclick="goto(20,20,40);">中等(20x20)</div>
+        <div onclick="goto(30,40,120);">困难(30x40)</div>
         <div onclick="chas('custom');">自定义</div>
         <div onclick="chas('theme');">主题设置</div>
     </div>
@@ -27,7 +28,7 @@
         <div class="head">
             <h1>自定义</h1>
         </div>
-        <div onclick="chas('')">返回到主页</div>
+        <div onclick="chas('');">返回到主页</div>
         <div class="ctin">
             <label>
                 长度<br />
@@ -55,14 +56,22 @@
             <div>用时<span id="time">0s</span></div>
             <div onclick="history.go(0);">新游戏</div>
         </div>
+        <div class="modl" id="over" onclick="history.go(0);">
+            <h2>Game Over!</h2>
+            单击以开始新游戏。
+        </div>
+        <div class="modl" id="win" onclick="history.go(0);">
+            <h2>你赢了！</h2>
+            单击以开始新游戏。
+        </div>
     </div>
     <div class="cont them">
         <div class="head">
             <h1>主题设置</h1>
         </div>
         <div onclick="chas('');">返回到主页</div>
-        <div onclick="cthe(false)">蓝色（默认）</div>
-        <div onclick="cthe(true)">绿色</div>
+        <div onclick="cthe(false);">蓝色（默认）</div>
+        <div onclick="cthe(true);">绿色</div>
     </div>
     <span id="link">Yblui.github.io</span>
     <script src="script.js"></script>

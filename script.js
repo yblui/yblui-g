@@ -1,5 +1,6 @@
 var wdj = [], tim = 0, jshi;
-if(!document.cookie) document.cookie="theme=false;expires=Thu, 18 Dec 2043 12:00:00 GMT";
+if (!document.cookie) document.cookie = "theme=false;expires=Thu, 18 Dec 2043 12:00:00 GMT";
+cthe(document.cookie[6] == "t");
 if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("cust")[0].style.display = "flex";
@@ -40,7 +41,9 @@ function cheq(a) {
     if (a) {
         if (a.classList.contains("mine")) {
             a.className += " cfed";
-            a.innerText = "X"
+            a.innerText = "X";
+            jshi = clearInterval(jshi);
+            document.getElementById("over").style.display = "block";
         } else if (arou(Number(a.dataset.a), Number(a.dataset.b))) {
             a.style.backgroundColor = "#E6C460";
             a.innerText = arou(Number(a.dataset.a), Number(a.dataset.b));
@@ -56,11 +59,19 @@ function cheq(a) {
                 }
             }
         }
-        if (!jshi) {
+        if (!jshi && document.getElementById("over").style.display != "block" && document.getElementById("win").style.display != "block") {
             jshi = setInterval(function () {
                 tim++;
                 document.getElementById("time").innerText = tim + "s";
             }, 1000)
+        }
+        var ckwi = true;
+        for (var lswi = 7; lswi < document.getElementsByClassName("game")[0].getElementsByTagName("div").length; lswi++) {
+            if (!document.getElementsByClassName("game")[0].getElementsByTagName("div")[lswi].classList.contains("mine") && !document.getElementsByClassName("game")[0].getElementsByTagName("div")[lswi].style.backgroundColor) ckwi = false;
+        }
+        if (ckwi) {
+            document.getElementById("win").style.display = "block";
+            jshi = clearInterval(jshi);
         }
     }
 }
@@ -80,18 +91,32 @@ function biao(a, event) {
     if (event.which == 3 && !a.innerText) {
         a.innerText = "?";
         lei--;
-    } else if (a.innerText == "?") {
+    } else if (event.which == 3 && a.innerText == "?") {
         a.innerText = "";
         lei++;
+    } else if (event.which == 2) {
+        cheq(a);
+        for (var lsc = -1; lsc <= 1; lsc++) {
+            for (var lsd = -1; lsd <= 1; lsd++) {
+                var pd = true;
+                for (var lse = 0; lse < wdj.length; lse++) {
+                    if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false
+                }
+                if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText == "?") pd = false;
+                if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
+            }
+        }
     }
     document.getElementById("syls").innerText = lei;
 }
-function cthe(a){
-    if(a){
+function cthe(a) {
+    if (a) {
         document.getElementsByTagName("html")[0].classList.add("green");
         document.getElementsByTagName("html")[0].classList.remove("blue");
+        document.cookie = "theme=true";
     } else {
         document.getElementsByTagName("html")[0].classList.remove("green");
         document.getElementsByTagName("html")[0].classList.add("blue");
+        document.cookie = "theme=false";
     }
 }

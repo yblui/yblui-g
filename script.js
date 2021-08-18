@@ -1,6 +1,13 @@
+function getCookie(a, b) {
+    var c = a.split("; ");
+    for (var d = 0; d < c.length; d++) {
+        c[d] = c[d].split("=");
+        if (c[d][0] == b) return c[d][1];
+    }
+}
 var wdj = [], tim = 0, jshi;
-if (!document.cookie) document.cookie = "theme=false;expires=Thu, 18 Dec 2043 12:00:00 GMT";
-cthe(document.cookie[6] == "t");
+if (!document.cookie) document.cookie = "theme=false; win=0; total=0; record=0; expires=Thu, 18 Dec 2043 12:00:00 GMT";
+cthe(getCookie(document.cookie, "theme") == "true");
 if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("cust")[0].style.display = "flex";
@@ -8,6 +15,11 @@ if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("them")[0].style.display = "flex";
     document.getElementsByClassName("game")[0].style.display = "none";
+    document.getElementById("win").innerText = getCookie(document.cookie, "win");
+    document.getElementById("total").innerText = getCookie(document.cookie, "total");
+    document.getElementById("per").innerText = Number(getCookie(document.cookie, "win")) / Number(getCookie(document.cookie, "total")) * 100 + "%";
+    document.getElementById("record").innerText = getCookie(document.cookie, "record");
+    if (getCookie(document.cookie, "total") == "0") document.getElementById("per").innerText = "0%";
 } else if (location.hash != "#" && location.hash != "") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("cust")[0].style.display = "none";
@@ -44,6 +56,7 @@ function cheq(a) {
             a.innerText = "X";
             jshi = clearInterval(jshi);
             document.getElementById("over").style.display = "block";
+            document.cookie = "total=" + Number(getCookie(document.cookie, "total")) + 1;
         } else if (arou(Number(a.dataset.a), Number(a.dataset.b))) {
             a.style.backgroundColor = "#E6C460";
             a.innerText = arou(Number(a.dataset.a), Number(a.dataset.b));
@@ -53,9 +66,13 @@ function cheq(a) {
                 for (var lsd = -1; lsd <= 1; lsd++) {
                     var pd = true;
                     for (var lse = 0; lse < wdj.length; lse++) {
-                        if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false
+                        if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
                     }
-                    if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
+                    if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document
+                        .getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor !=
+                        "white" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor
+                        != "#E6C460" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText
+                        != "X" && pd) wdj[wdj.length] = document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
                 }
             }
         }
@@ -67,11 +84,18 @@ function cheq(a) {
         }
         var ckwi = true;
         for (var lswi = 7; lswi < document.getElementsByClassName("game")[0].getElementsByTagName("div").length; lswi++) {
-            if (!document.getElementsByClassName("game")[0].getElementsByTagName("div")[lswi].classList.contains("mine") && !document.getElementsByClassName("game")[0].getElementsByTagName("div")[lswi].style.backgroundColor) ckwi = false;
+            if (!document.getElementsByClassName("game")[0].getElementsByTagName("div")[lswi].classList.contains("mine") && !document.getElementsByClassName(
+                "game")[0].getElementsByTagName("div")[lswi].style.backgroundColor) ckwi = false;
         }
         if (ckwi) {
             document.getElementById("win").style.display = "block";
             jshi = clearInterval(jshi);
+            document.cookie = "win=" + Number(getCookie(document.cookie, "win")) + 1;
+            document.cookie = "total=" + Number(getCookie(document.cookie, "total")) + 1;
+            if (Number(getCookie(document.cookie, "record")) > Number(document.getElementById("time").innerText.replace("s", ""))) {
+                document.cookie = "record=" + document.getElementById("time").innerText.replace("s", "");
+                document.getElementsByTagName("p")[0].style.display = "block";
+            }
         }
     }
 }
@@ -79,7 +103,8 @@ function arou(a, b) {
     var coun = 0;
     for (var lsc = -1; lsc <= 1; lsc++) {
         for (var lsd = -1; lsd <= 1; lsd++) {
-            if (document.getElementsByClassName("a" + (a + lsc) + " b" + (b + lsd))[0] && document.getElementsByClassName("a" + (a + lsc) + " b" + (b + lsd))[0].classList.contains("mine")) coun++;
+            if (document.getElementsByClassName("a" + (a + lsc) + " b" + (b + lsd))[0] && document.getElementsByClassName("a" + (a + lsc) + " b" + (b +
+                lsd))[0].classList.contains("mine")) coun++;
         }
     }
     return coun;
@@ -95,19 +120,26 @@ function biao(a, event) {
         a.innerText = "";
         lei++;
     } else if (event.which == 2) {
+        event.preventDefault();
         cheq(a);
         for (var lsc = -1; lsc <= 1; lsc++) {
             for (var lsd = -1; lsd <= 1; lsd++) {
                 var pd = true;
                 for (var lse = 0; lse < wdj.length; lse++) {
-                    if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false
+                    if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
                 }
-                if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText == "?") pd = false;
-                if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
+                if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
+                    "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText == "?") pd = false;
+                if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
+                    "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && document.getElementsByClassName("a"
+                    + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && document.getElementsByClassName("a"
+                    + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = document.getElementsByClassName("a"
+                    + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
             }
         }
     }
     document.getElementById("syls").innerText = lei;
+    return false;
 }
 function cthe(a) {
     if (a) {
@@ -119,4 +151,11 @@ function cthe(a) {
         document.getElementsByTagName("html")[0].classList.add("blue");
         document.cookie = "theme=false";
     }
+}
+function clea() {
+    document.cookie = "win=0; total=0; record=0";
+    document.getElementById("win").innerText = 0;
+    document.getElementById("total").innerText = 0;
+    document.getElementById("per").innerText = "0%";
+    document.getElementById("record").innerText = "0s";
 }

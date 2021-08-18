@@ -38,10 +38,10 @@ div:not(.cont, .grid, .flex) {
 }
 
 .flex div {
-    height: 50%;
+    height: inherit;
 }
 
-div:not(.cont):hover {
+div:not(.cont):hover, div:not(.cont):hover input {
     background-color: white;
     color: var(--theme);
     font-weight: bold;
@@ -69,7 +69,7 @@ span {
     z-index: -1;
 }
 
-.cont:not(.main) {
+.cont:not(.main), p {
     display: none;
 }
 
@@ -110,6 +110,7 @@ input {
     background-color: var(--theme);
     color: white;
     font-family: "Microsoft Yahei", 'Segoe UI', sans-serif;
+    outline: none;
 }
 
 .ctin {
@@ -156,5 +157,10 @@ html, body, .cont {
     position: fixed;
     top: 50%;
     transform: translate(0, -50%);
-    width:100%
+    width: 100%
+}
+
+::selection {
+    color: white;
+    background-color: var(--theme);
 }

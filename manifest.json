@@ -1,3 +1,17 @@
 {
-    "name": "Yblui-f Minesweeper"
+    "name": "Yblui-g Minesweeper",
+    "description": "Yblui-g Minesweeper",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "short_name": "Yblui-g",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#005B85",
+    "theme_color": "#eee",
+    "lang": "zh-CN"
 }

@@ -21,7 +21,7 @@
     height: 60%!important;
 }
 
-div:not(.cont, .flex) {
+div:not(.cont, .flex, #boar) {
     color: white;
     background-color: var(--theme);
     border: solid 2px white;
@@ -41,7 +41,7 @@ div:not(.cont, .grid, .flex) {
     height: inherit;
 }
 
-div:not(.cont):hover, div:not(.cont):hover input {
+div:not(.cont, #boar):hover, div:not(.cont):hover input {
     background-color: white;
     color: var(--theme);
     font-weight: bold;
@@ -163,4 +163,12 @@ html, body, .cont {
 ::selection {
     color: white;
     background-color: var(--theme);
+}
+
+#boar{
+    display: inline-block;
+}
+
+.game{
+    text-align: center;
 }

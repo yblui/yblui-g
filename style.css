@@ -37,6 +37,12 @@ div:not(.cont, .grid, .flex) {
     height: 40%!important;
 }
 
+@media screen and (max-width:821px) {
+    #boar {
+        top: 80%!important;
+    }
+}
+
 .flex div {
     height: inherit;
 }
@@ -144,12 +150,14 @@ html, body, .cont {
     text-align: center;
 }
 
-.cfed {
+.cfed, .cfed input {
     background-color: #FA3744!important;
+    color: white!important;
 }
 
-.cfed:hover {
-    color: white!important;
+.cfed:hover, .cfed:hover input {
+    background-color: white!important;
+    color: #FA3744!important;
 }
 
 .modl {
@@ -157,7 +165,8 @@ html, body, .cont {
     position: fixed;
     top: 50%;
     transform: translate(0, -50%);
-    width: 100%
+    width: 100%;
+    z-index: 100;
 }
 
 ::selection {
@@ -165,10 +174,14 @@ html, body, .cont {
     background-color: var(--theme);
 }
 
-#boar{
-    display: inline-block;
+#boar {
+    margin: 0 auto;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
 }
 
-.game{
+.game {
     text-align: center;
 }

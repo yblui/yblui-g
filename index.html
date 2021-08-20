@@ -20,9 +20,9 @@
             <h1>Yblui-g</h1>
         </div>
         <div onclick="history.go(-1);">退出</div>
-        <div onclick="goto(10,10,10);">简单(10x10)</div>
-        <div onclick="goto(20,20,40);">中等(20x20)</div>
-        <div onclick="goto(30,40,120);">困难(30x40)</div>
+        <div onclick="goto(10,10,10);">简单<span>10x10</span></div>
+        <div onclick="goto(20,20,40);">中等<span>20x20</span></div>
+        <div onclick="goto(30,40,120);">困难<span>30x40</span></div>
         <div onclick="chas('custom');">自定义</div>
         <div onclick="chas('theme');">设置</div>
     </div>
@@ -34,13 +34,13 @@
         <div class="ctin">
             <label>
                 长度<br />
-                <input type="number" min="9" max="40" value="9" id="len" oninput="qdmi();" />
+                <input type="number" min="9" max="40" value="9" id="len" oninput="qdmi(this);" />
             </label>
         </div>
         <div class="ctin">
             <label>
                 宽度<br />
-                <input type="number" min="9" max="30" value="9" id="wdt" oninput="qdmi();" />
+                <input type="number" min="9" max="30" value="9" id="wdt" oninput="qdmi(this);" />
             </label>
         </div>
         <div class="ctin">
@@ -62,12 +62,12 @@
         </div>
         <div class="modl" id="over" onclick="history.go(0);">
             <h2>Game Over!</h2>
-            单击以开始新游戏。
+            单击以开始新游戏.
         </div>
         <div class="modl" id="win" onclick="history.go(0);">
             <h2>你赢了！</h2>
             <p>你的成绩是目前的纪录！</p>
-            单击以开始新游戏。
+            单击以开始新游戏.
         </div>
         <div id="boar"></div>
     </div>
@@ -85,12 +85,19 @@
             <h2>统计数据</h2>
         </div>
         <div>总计局数<span id="total">0</span></div>
-        <div>获胜局数<span id="win">0</span></div>
+        <div>获胜局数<span id="winn">0</span></div>
         <div>获胜率<span id="per"></span></div>
         <div>最快用时<span id="record">0s</span></div>
         <div>当前连局<span id="lju">0</span></div>
         <div>最高连局<span id="zlju">0</span></div>
         <div onclick="clea();">清除数据</div>
+    </div>
+    <div class="cont err">
+        <div class="head">
+            <h1>错误提示</h1>
+        </div>
+        <div onclick="history.go(-2);">你输入的数值不符合要求，盘面的长、宽均应大于或等于9且长小于或等于40，宽小于或等于30.<br />
+            点击此处返回.</div>
     </div>
     <span id="link">Yblui.github.io</span>
     <script src="script.js"></script>

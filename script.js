@@ -10,7 +10,7 @@ if (!document.cookie) {
     document.cookie = "theme=false";
     document.cookie = "win=0";
     document.cookie = "total=0";
-    document.cookie = "record=0";
+    document.cookie = "record=Infinity";
     document.cookie = "lju=0";
     document.cookie = "zlju=0";
     document.cookie = "expires=Thu, 18 Dec 2043 12:00:00 GMT";
@@ -23,16 +23,25 @@ if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("them")[0].style.display = "flex";
     document.getElementsByClassName("game")[0].style.display = "none";
-    document.getElementById("win").innerText = getCookie(document.cookie, "win");
+    document.getElementById("winn").innerText = getCookie(document.cookie, "win");
     document.getElementById("total").innerText = getCookie(document.cookie, "total");
+    document.getElementById("lju").innerText = getCookie(document.cookie, "lju");
+    document.getElementById("zlju").innerText = getCookie(document.cookie, "zlju");
     document.getElementById("per").innerText = Number(getCookie(document.cookie, "win")) / Number(getCookie(document.cookie, "total")) * 100 + "%";
-    document.getElementById("record").innerText = getCookie(document.cookie, "record");
+    if (getCookie(document.cookie, "record") != "Infinity") document.getElementById("record").innerText = getCookie(document.cookie, "record") + "s";
     if (getCookie(document.cookie, "total") == "0") document.getElementById("per").innerText = "0%";
+} else if (location.hash == "#err") {
+    document.getElementsByClassName("main")[0].style.display = "none";
+    document.getElementsByClassName("err")[0].style.display = "flex";
 } else if (location.hash != "#" && location.hash != "") {
+    var list = location.hash.replace("#", "").split(","), lei = list[2];
+    if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) {
+        location.hash = "#err";
+        history.go(0);
+    }
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("cust")[0].style.display = "none";
     document.getElementsByClassName("game")[0].style.display = "block";
-    var list = location.hash.replace("#", "").split(","), lei = list[2];
     for (var a = 0; a < Number(list[0]); a++) {
         for (var b = 0; b < Number(list[1]); b++) {
             document.getElementById("boar").innerHTML += "<div class='mine grid a" + a + " b" + b + "' onclick='cheq(this)' data-a='" + a +
@@ -65,6 +74,7 @@ function cheq(a) {
             jshi = clearInterval(jshi);
             document.getElementById("over").style.display = "block";
             document.cookie = "total=" + (Number(getCookie(document.cookie, "total")) + 1);
+            document.cookie = "lju=0";
         } else if (arou(Number(a.dataset.a), Number(a.dataset.b))) {
             a.style.backgroundColor = "#E6C460";
             a.style.color = "black";
@@ -105,6 +115,8 @@ function cheq(a) {
                 document.cookie = "record=" + document.getElementById("time").innerText.replace("s", "");
                 document.getElementsByTagName("p")[0].style.display = "block";
             }
+            document.cookie = "lju=" + (Number(getCookie(document.cookie, "lju")) + 1);
+            if ((Number(getCookie(document.cookie, "lju")) + 1) > Number(getCookie(document.cookie, "zlju"))) document.cookie = "zlju=" + getCookie(document.cookie, "lju");
         }
     }
 }
@@ -118,8 +130,14 @@ function arou(a, b) {
     }
     return coun;
 }
-function qdmi() {
+function qdmi(a) {
     document.getElementById("mine").max = Number(document.getElementById("len").value) * Number(document.getElementById("wdt").value);
+    if (Number(a.value) > Number(a.max) || Number(a.value) < Number(a.min) || Number(document.getElementById("mine").value) < 0 || Number(document.getElementById(
+        "mine").value) > Number(document.getElementById("len").value) * Number(document.getElementById("wdt").value)) {
+        a.parentNode.parentNode.classList.add("cfed");
+    } else {
+        a.parentNode.parentNode.classList.remove("cfed");
+    }
 }
 function biao(a, event) {
     if (event.which == 3 && !a.innerText) {
@@ -129,6 +147,7 @@ function biao(a, event) {
         a.innerText = "";
         lei++;
     } else if (event.which == 2) {
+        if (a.innerText == "?") return;
         event.preventDefault();
         cheq(a);
         for (var lsc = -1; lsc <= 1; lsc++) {
@@ -162,8 +181,12 @@ function clea() {
     document.cookie = "win=0";
     document.cookie = "total=0";
     document.cookie = "record=0";
-    document.getElementById("win").innerText = 0;
+    document.cookie = "lju=0";
+    document.cookie = "zlju=0";
+    document.getElementById("winn").innerText = 0;
     document.getElementById("total").innerText = 0;
     document.getElementById("per").innerText = "0%";
     document.getElementById("record").innerText = "0s";
+    document.getElementById("lju").innerText = 0;
+    document.getElementById("zlju").innerText = 0;
 }

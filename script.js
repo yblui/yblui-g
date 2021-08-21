@@ -27,7 +27,7 @@ if (location.hash == "#custom") {
     document.getElementById("total").innerText = getCookie(document.cookie, "total");
     document.getElementById("lju").innerText = getCookie(document.cookie, "lju");
     document.getElementById("zlju").innerText = getCookie(document.cookie, "zlju");
-    document.getElementById("per").innerText = Number(getCookie(document.cookie, "win")) / Number(getCookie(document.cookie, "total")) * 100 + "%";
+    document.getElementById("per").innerText = (Number(getCookie(document.cookie, "win")) / Number(getCookie(document.cookie, "total")) * 100).toFixed(2) + "%";
     if (getCookie(document.cookie, "record") != "Infinity") document.getElementById("record").innerText = getCookie(document.cookie, "record") + "s";
     if (getCookie(document.cookie, "total") == "0") document.getElementById("per").innerText = "0%";
 } else if (location.hash == "#err") {

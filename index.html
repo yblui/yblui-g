@@ -55,7 +55,7 @@
     </div>
     <div class="cont game">
         <div class="flex">
-            <div onclick="chas('');">返回到主页</div>
+            <div onclick="gmfh();">返回到主页</div>
             <div>剩余雷数<span id="syls"></span></div>
             <div>用时<span id="time">0s</span></div>
             <div onclick="history.go(0);">新游戏</div>
@@ -68,6 +68,11 @@
             <h2>你赢了！</h2>
             <p>你的成绩是目前的纪录！</p>
             单击以开始新游戏.
+        </div>
+        <div class="modl" id="warn">
+            <h2>警告</h2>
+            是否保存？若不保存，本轮将会判负.<br />
+            点击以保存，右键单击以不保存，3s后自动取消.
         </div>
         <div id="boar"></div>
     </div>
@@ -96,7 +101,7 @@
         <div class="head">
             <h1>错误提示</h1>
         </div>
-        <div onclick="history.go(-2);">你输入的数值不符合要求，盘面的长、宽均应大于或等于9且长小于或等于40，宽小于或等于30.<br />
+        <div onclick="chas('custom');">你输入的数值不符合要求，盘面的长、宽均应大于或等于9且长小于或等于40，宽小于或等于30.<br />
             点击此处返回.</div>
     </div>
     <span id="link">Yblui.github.io</span>

@@ -1,21 +1,20 @@
-function getCookie(a, b) {
-    var c = a.split("; ");
+function getCookie(b) {
+    var c = document.cookie.split("; ");
     for (var d = 0; d < c.length; d++) {
         c[d] = c[d].split("=");
         if (c[d][0] == b) return c[d][1];
     }
 }
+function setCookie() {
+    for (var d = 0; d < arguments.length; d++) {
+        document.cookie = arguments[d];
+    }
+}
 var wdj = [], tim = 0, jshi;
 if (!document.cookie) {
-    document.cookie = "theme=false";
-    document.cookie = "win=0";
-    document.cookie = "total=0";
-    document.cookie = "record=Infinity";
-    document.cookie = "lju=0";
-    document.cookie = "zlju=0";
-    document.cookie = "expires=Thu, 18 Dec 2043 12:00:00 GMT";
+    setCookie("theme=false", "win=0", "total=0", "record=Infinity", "lju=0", "zlju=0", "expires=Thu, 18 Dec 2043 12:00:00 GMT");
 }
-cthe(getCookie(document.cookie, "theme") == "true");
+cthe(getCookie("theme") == "true");
 if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("cust")[0].style.display = "flex";
@@ -23,13 +22,13 @@ if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("them")[0].style.display = "flex";
     document.getElementsByClassName("game")[0].style.display = "none";
-    document.getElementById("winn").innerText = getCookie(document.cookie, "win");
-    document.getElementById("total").innerText = getCookie(document.cookie, "total");
-    document.getElementById("lju").innerText = getCookie(document.cookie, "lju");
-    document.getElementById("zlju").innerText = getCookie(document.cookie, "zlju");
-    document.getElementById("per").innerText = (Number(getCookie(document.cookie, "win")) / Number(getCookie(document.cookie, "total")) * 100).toFixed(2) + "%";
-    if (getCookie(document.cookie, "record") != "Infinity") document.getElementById("record").innerText = getCookie(document.cookie, "record") + "s";
-    if (getCookie(document.cookie, "total") == "0") document.getElementById("per").innerText = "0%";
+    document.getElementById("winn").innerText = getCookie("win");
+    document.getElementById("total").innerText = getCookie("total");
+    document.getElementById("lju").innerText = getCookie("lju");
+    document.getElementById("zlju").innerText = getCookie("zlju");
+    document.getElementById("per").innerText = (Number(getCookie("win")) / Number(getCookie("total")) * 100).toFixed(2) + "%";
+    if (getCookie("record") != "Infinity") document.getElementById("record").innerText = getCookie("record") + "s";
+    if (getCookie("total") == "0") document.getElementById("per").innerText = "0%";
 } else if (location.hash == "#err") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("err")[0].style.display = "flex";
@@ -73,8 +72,8 @@ function cheq(a) {
             a.innerText = "X";
             jshi = clearInterval(jshi);
             document.getElementById("over").style.display = "block";
-            document.cookie = "total=" + (Number(getCookie(document.cookie, "total")) + 1);
-            document.cookie = "lju=0";
+            setCookie("total=" + (Number(getCookie("total")) + 1));
+            setCookie("lju=0");
         } else if (arou(Number(a.dataset.a), Number(a.dataset.b))) {
             a.style.backgroundColor = "#E6C460";
             a.style.color = "black";
@@ -109,14 +108,14 @@ function cheq(a) {
         if (ckwi) {
             document.getElementById("win").style.display = "block";
             jshi = clearInterval(jshi);
-            document.cookie = "win=" + (Number(getCookie(document.cookie, "win")) + 1);
-            document.cookie = "total=" + (Number(getCookie(document.cookie, "total")) + 1);
-            if (Number(getCookie(document.cookie, "record")) > Number(document.getElementById("time").innerText.replace("s", ""))) {
-                document.cookie = "record=" + document.getElementById("time").innerText.replace("s", "");
+            setCookie("win=" + (Number(getCookie("win")) + 1));
+            setCookie("total=" + (Number(getCookie("total")) + 1));
+            if (Number(getCookie("record")) > Number(document.getElementById("time").innerText.replace("s", ""))) {
+                setCookie("record=" + document.getElementById("time").innerText.replace("s", ""));
                 document.getElementsByTagName("p")[0].style.display = "block";
             }
-            document.cookie = "lju=" + (Number(getCookie(document.cookie, "lju")) + 1);
-            if ((Number(getCookie(document.cookie, "lju")) + 1) > Number(getCookie(document.cookie, "zlju"))) document.cookie = "zlju=" + getCookie(document.cookie, "lju");
+            setCookie("lju=" + (Number(getCookie("lju")) + 1));
+            if ((Number(getCookie("lju")) + 1) > Number(getCookie("zlju"))) setCookie("zlju=" + getCookie("lju"));
         }
     }
 }
@@ -170,23 +169,26 @@ function cthe(a) {
     if (a) {
         document.getElementsByTagName("html")[0].classList.add("green");
         document.getElementsByTagName("html")[0].classList.remove("blue");
-        document.cookie = "theme=true";
+        setCookie("theme=true");
     } else {
         document.getElementsByTagName("html")[0].classList.remove("green");
         document.getElementsByTagName("html")[0].classList.add("blue");
-        document.cookie = "theme=false";
+        setCookie("theme=false");
     }
 }
 function clea() {
-    document.cookie = "win=0";
-    document.cookie = "total=0";
-    document.cookie = "record=0";
-    document.cookie = "lju=0";
-    document.cookie = "zlju=0";
+    setCookie("win=0", "total=0", "record=0", "lju=0", "zlju=0");
     document.getElementById("winn").innerText = 0;
     document.getElementById("total").innerText = 0;
     document.getElementById("per").innerText = "0%";
     document.getElementById("record").innerText = "0s";
     document.getElementById("lju").innerText = 0;
     document.getElementById("zlju").innerText = 0;
+}
+function gmfh() {
+    if (document.getElementById("time").innerText != "0s") {
+        document.getElementById("warn").style.display = "block";
+    } else {
+        chas("");
+    }
 }

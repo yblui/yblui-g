@@ -12,7 +12,8 @@ function setCookie() {
 }
 var wdj = [], tim = 0, jshi;
 if (!document.cookie) {
-    setCookie("theme=false", "win=0", "total=0", "record=Infinity", "lju=0", "zlju=0", "expires=Thu, 18 Dec 2043 12:00:00 GMT", "game=9x9", "mask=000000000000000000000000000000000000000000000000000000000000000000000000000000000", "sved=false");
+    setCookie("theme=false", "win=0", "total=0", "record=Infinity", "lju=0", "zlju=0", "expires=Thu, 18 Dec 2043 12:00:00 GMT", "game=9x9", "mask=000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "sved=false");
 }
 cthe(getCookie("theme") == "true");
 if (location.hash == "#custom") {
@@ -32,6 +33,32 @@ if (location.hash == "#custom") {
 } else if (location.hash == "#err") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("err")[0].style.display = "flex";
+} else if (location.hash == "#continue") {
+    document.getElementsByClassName("main")[0].style.display = "none";
+    document.getElementsByClassName("game")[0].style.display = "block";
+    if (getCookie("sved") != "true") {
+        var ginf = getCookie("game").split(", ");
+        for (var a = 0; a < Number(ginf[0].split("x")[0]); a++) {
+            for (var b = 0; b < Number(ginf[0].split("x")[1]); b++) {
+                document.getElementById("boar").innerHTML += "<div class='grid a" + a + " b" + b + "' onclick='cheq(this)' data-a='" + a +
+                    "' data-b='" + b + "' onmousedown='biao(this,event)'></div>";
+            }
+            document.getElementById("boar").innerHTML += "<br />";
+        }
+        for (var w = 1; w < ginf.length; w++) {
+            ginf[w] = ginf[w].split("&");
+            document.getElementsByClassName("a" + ginf[w][0] + " b" + ginf[w][1]).classList.add("mine");
+        }
+        document.getElementById("syls").innerText = ginf.length - 1;
+        var msk = getCookie("mask").split("");
+        for (var v = 0; v < msk.length; v++) {
+            if (msk[v] == "1") {
+                cheq(document.getElementsByClassName("grid")[v]);
+            } else if (msk[v] == "2") {
+                document.getElementsByClassName("grid")[v].innerText = "?";
+            }
+        }
+    }
 } else if (location.hash != "#" && location.hash != "") {
     var list = location.hash.replace("#", "").split(","), lei = list[2];
     if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) {
@@ -72,7 +99,8 @@ function cheq(a) {
             a.innerText = "X";
             jshi = clearInterval(jshi);
             document.getElementById("over").style.display = "block";
-            setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0", "sved=false");
+            setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
+            if (location.hash == "#continue") setCookie("sved=false");
         } else if (arou(Number(a.dataset.a), Number(a.dataset.b))) {
             a.style.backgroundColor = "#E6C460";
             a.style.color = "black";
@@ -188,14 +216,16 @@ function clea() {
     document.getElementById("lju").innerText = 0;
     document.getElementById("zlju").innerText = 0;
 }
-function gmfh() {
+function gmfh(a) {
     if (document.getElementById("time").innerText != "0s") {
         document.getElementById("warn").style.display = "block";
         setTimeout(function () {
             document.getElementById("warn").style.display = "none";
         }, 3000)
-    } else {
+    } else if (a) {
         chas("");
+    } else {
+        history.go(0);
     }
 }
 function save() {
@@ -205,11 +235,11 @@ function save() {
     }
     for (var j = 0; j < document.getElementsByClassName("grid").length; j++) {
         if (document.getElementsByClassName("grid")[j].innerText == "?") {
-            str += "9";
-        } else if (!document.getElementsByClassName("grid")[j].innerText) {
+            str += "2";
+        } else if (document.getElementsByClassName("grid")[j].style.backgroundColor && !document.getElementsByClassName("grid")[j].innerText) {
             str += "0";
         } else {
-            str += document.getElementsByClassName("grid")[j].innerText;
+            str += "1";
         }
     }
     setCookie("game=" + list[0] + "x" + list[1] + ", " + leil.join(", "), "mask=" + str, "sved=true");

@@ -25,6 +25,7 @@
         <div onclick="goto(30,40,120);">困难<span>30x40</span></div>
         <div onclick="chas('custom');">自定义</div>
         <div onclick="chas('theme');">设置</div>
+        <div onclick="chas('continue');">继续未保存的游戏</div>
     </div>
     <div class="cont cust">
         <div class="head">
@@ -55,10 +56,10 @@
     </div>
     <div class="cont game">
         <div class="flex">
-            <div onclick="gmfh();">返回到主页</div>
+            <div onclick="gmfh(true);">返回到主页</div>
             <div>剩余雷数<span id="syls"></span></div>
             <div>用时<span id="time">0s</span></div>
-            <div onclick="history.go(0);">新游戏</div>
+            <div onclick="gmfh(false);">新游戏</div>
         </div>
         <div class="modl" id="over" onclick="history.go(0);">
             <h2>Game Over!</h2>
@@ -103,6 +104,12 @@
         </div>
         <div onclick="chas('custom');">你输入的数值不符合要求，盘面的长、宽均应大于或等于9且长小于或等于40，宽小于或等于30.<br />
             点击此处返回.</div>
+    </div>
+    <div class="cont err">
+        <div class="head">
+            <h1>错误提示</h1>
+        </div>
+        <div onclick="chas('custom');">没有未保存的游戏, 点击此处返回.</div>
     </div>
     <span id="link">Yblui.github.io</span>
     <script src="script.js"></script>

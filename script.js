@@ -35,8 +35,8 @@ if (location.hash == "#custom") {
     document.getElementsByClassName("err")[0].style.display = "flex";
 } else if (location.hash == "#continue") {
     document.getElementsByClassName("main")[0].style.display = "none";
-    document.getElementsByClassName("game")[0].style.display = "block";
-    if (getCookie("sved") != "true") {
+    if (getCookie("sved") == "true") {
+        document.getElementsByClassName("game")[0].style.display = "block";
         var ginf = getCookie("game").split(", ");
         for (var a = 0; a < Number(ginf[0].split("x")[0]); a++) {
             for (var b = 0; b < Number(ginf[0].split("x")[1]); b++) {
@@ -47,7 +47,7 @@ if (location.hash == "#custom") {
         }
         for (var w = 1; w < ginf.length; w++) {
             ginf[w] = ginf[w].split("&");
-            document.getElementsByClassName("a" + ginf[w][0] + " b" + ginf[w][1]).classList.add("mine");
+            document.getElementsByClassName("a" + ginf[w][0] + " b" + ginf[w][1])[0].classList.add("mine");
         }
         document.getElementById("syls").innerText = ginf.length - 1;
         var msk = getCookie("mask").split("");
@@ -58,12 +58,13 @@ if (location.hash == "#custom") {
                 document.getElementsByClassName("grid")[v].innerText = "?";
             }
         }
+    } else {
+        document.getElementsByClassName("err")[1].display = "flex";
     }
 } else if (location.hash != "#" && location.hash != "") {
     var list = location.hash.replace("#", "").split(","), lei = list[2];
     if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) {
-        location.hash = "#err";
-        history.go(0);
+        chas("err");
     }
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("cust")[0].style.display = "none";
@@ -242,6 +243,36 @@ function save() {
             str += "1";
         }
     }
+    if (getCookie("sved") == "true") {
+        setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
+    }
     setCookie("game=" + list[0] + "x" + list[1] + ", " + leil.join(", "), "mask=" + str, "sved=true");
     chas("");
+}
+function kdow(event) {
+    if (event.altKey) {
+        switch (event.key) {
+            case "Escape":
+                location.href = 'about:blank';
+                break;
+            case "e":
+                chas("10,10,10");
+                break;
+            case "m":
+                chas("20,20,40");
+                break;
+            case "h":
+                chas("30,40,120");
+                break;
+            case "c":
+                chas("custom");
+                break;
+            case "s":
+                chas("theme");
+                break;
+            case "o":
+                chas("continue");
+                break;
+        }
+    }
 }

@@ -29,7 +29,7 @@ if (location.hash == "#custom") {
     document.getElementById("zlju").innerText = getCookie("zlju");
     document.getElementById("per").innerText = (Number(getCookie("win")) / Number(getCookie("total")) * 100).toFixed(2) + "%";
     if (getCookie("record") != "Infinity") document.getElementById("record").innerText = getCookie("record") + "s";
-    if (getCookie("total") == "0") document.getElementById("per").innerText = "0%";
+    if (getCookie("total") == "0") document.getElementById("per").innerText = "0.00%";
 } else if (location.hash == "#err") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("err")[0].style.display = "flex";
@@ -95,7 +95,7 @@ function goto(a, b, c) {
 }
 function cheq(a) {
     if (a && a.innerText != "?") {
-        if (a.classList.contains("mine")) {
+        if (a.classList.contains("mine") && document.getElementById("over").style.display != "block") {
             a.className += " cfed";
             a.innerText = "X";
             jshi = clearInterval(jshi);
@@ -212,7 +212,7 @@ function clea() {
     setCookie("win=0", "total=0", "record=0", "lju=0", "zlju=0");
     document.getElementById("winn").innerText = 0;
     document.getElementById("total").innerText = 0;
-    document.getElementById("per").innerText = "0%";
+    document.getElementById("per").innerText = "0.00%";
     document.getElementById("record").innerText = "0s";
     document.getElementById("lju").innerText = 0;
     document.getElementById("zlju").innerText = 0;
@@ -226,6 +226,7 @@ function gmfh(a) {
     } else if (a) {
         chas("");
     } else {
+        if (location.hash == "#continue") chas("10,10,10");
         history.go(0);
     }
 }
@@ -237,7 +238,7 @@ function save() {
     for (var j = 0; j < document.getElementsByClassName("grid").length; j++) {
         if (document.getElementsByClassName("grid")[j].innerText == "?") {
             str += "2";
-        } else if (document.getElementsByClassName("grid")[j].style.backgroundColor && !document.getElementsByClassName("grid")[j].innerText) {
+        } else if (!document.getElementsByClassName("grid")[j].style.backgroundColor && !document.getElementsByClassName("grid")[j].innerText) {
             str += "0";
         } else {
             str += "1";
@@ -250,11 +251,9 @@ function save() {
     chas("");
 }
 function kdow(event) {
+    if (event.key == "Escape") location.href = 'about:blank';
     if (event.altKey) {
         switch (event.key) {
-            case "Escape":
-                location.href = 'about:blank';
-                break;
             case "e":
                 chas("10,10,10");
                 break;
@@ -273,6 +272,14 @@ function kdow(event) {
             case "o":
                 chas("continue");
                 break;
+            case "b":
+                cthe(false);
+                break;
+            case "g":
+                cthe(true);
+                break;
+            case "l":
+                clea();
         }
     }
 }

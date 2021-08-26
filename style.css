@@ -24,7 +24,7 @@
 div:not(.cont, .flex, #boar) {
     color: white;
     background-color: var(--theme);
-    border: solid 2px white;
+    border: solid 1px #eee;
 }
 
 div:not(.cont, .grid, .flex) {
@@ -163,10 +163,18 @@ html, body, .cont {
 .modl {
     display: none;
     position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: 100%!important;
+    background-color: rgba(0, 0, 0, 0.7)!important;
+}
+
+.modl div {
+    position: fixed;
     top: 50%;
     transform: translate(0, -50%);
     width: 100%;
-    z-index: 100;
 }
 
 ::selection {
@@ -184,4 +192,5 @@ html, body, .cont {
 
 .game {
     text-align: center;
+    height: 100%;
 }

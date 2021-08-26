@@ -62,18 +62,23 @@
             <div onclick="gmfh(false);">新游戏</div>
         </div>
         <div class="modl" id="over" onclick="history.go(0);">
-            <h2>Game Over!</h2>
-            单击以开始新游戏.
+            <div>
+                <h2>Game Over!</h2>
+                单击以开始新游戏.
+            </div>
         </div>
         <div class="modl" id="win" onclick="history.go(0);">
-            <h2>你赢了！</h2>
-            <p>你的成绩是目前的纪录！</p>
-            单击以开始新游戏.
+            <div>
+                <h2>你赢了！</h2>
+                <p>你的成绩是目前的纪录！</p>
+                单击以开始新游戏.
+            </div>
         </div>
         <div class="modl" id="warn" onclick="save();" onmousedown="biao(this, event);">
-            <h2>警告</h2>
-            是否保存？若不保存，本轮将会判负.<br />
-            点击以保存，右键单击以不保存，3s后自动取消.
+            <div>
+                <h2>警告</h2>
+                是否保存？若不保存，本轮将会判负.<br />点击以保存，右键单击以不保存，3s后自动取消.
+            </div>
         </div>
         <div id="boar"></div>
     </div>
@@ -85,18 +90,18 @@
         <div class="head">
             <h2>主题</h2>
         </div>
-        <div onclick="cthe(false);">蓝色（默认）</div>
-        <div onclick="cthe(true);">绿色</div>
+        <div onclick="cthe(false);">蓝色（默认）(B)</div>
+        <div onclick="cthe(true);">绿色(G)</div>
         <div class="head">
             <h2>统计数据</h2>
         </div>
         <div>总计局数<span id="total">0</span></div>
         <div>获胜局数<span id="winn">0</span></div>
-        <div>获胜率<span id="per"></span></div>
+        <div>获胜率<span id="per">0.00%</span></div>
         <div>最快用时<span id="record">0s</span></div>
         <div>当前连局<span id="lju">0</span></div>
         <div>最高连局<span id="zlju">0</span></div>
-        <div onclick="clea();">清除数据</div>
+        <div onclick="clea();">清除数据(L)</div>
     </div>
     <div class="cont err">
         <div class="head">

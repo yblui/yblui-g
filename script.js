@@ -12,7 +12,7 @@ function setCookie() {
 }
 var wdj = [], tim = 0, jshi;
 if (!document.cookie) {
-    setCookie("theme=false", "win=0", "total=0", "record=Infinity", "lju=0", "zlju=0", "expires=Thu, 18 Dec 2043 12:00:00 GMT", "game=9x9", "mask=000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    setCookie("theme=false", "win=0,0,0,0", "total=0,0,0,0", "record=Infinity,Infinity,Infinity,Infinity", "lju=0,0,0,0", "zlju=0,0,0,0", "expires=Thu, 18 Dec 2043 12:00:00 GMT", "game=9x9", "mask=000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "sved=false");
 }
 cthe(getCookie("theme") == "true");
@@ -23,11 +23,11 @@ if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("them")[0].style.display = "flex";
     document.getElementsByClassName("game")[0].style.display = "none";
-    document.getElementById("winn").innerText = getCookie("win");
-    document.getElementById("total").innerText = getCookie("total");
-    document.getElementById("lju").innerText = getCookie("lju");
-    document.getElementById("zlju").innerText = getCookie("zlju");
-    document.getElementById("per").innerText = (Number(getCookie("win")) / Number(getCookie("total")) * 100).toFixed(2) + "%";
+    document.getElementsByClassName("winn")[0].innerText = getCookie("win").split(",")[0];
+    document.getElementsByClassName("total")[0].innerText = getCookie("total").split(",")[0];
+    document.getElementsByClassName("lju")[0].innerText = getCookie("lju").split(",")[0];
+    document.getElementsByClassName("zlju")[0].innerText = getCookie("zlju").split(",")[0];
+    document.getElementsByClassName("per")[0].innerText = (Number(getCookie("win").split(",")[0]) / Number(getCookie("total").split(",")[0]) * 100).toFixed(2) + "%";
     if (getCookie("record") != "Infinity") document.getElementById("record").innerText = getCookie("record") + "s";
     if (getCookie("total") == "0") document.getElementById("per").innerText = "0.00%";
 } else if (location.hash == "#err") {
@@ -49,7 +49,8 @@ if (location.hash == "#custom") {
             ginf[w] = ginf[w].split("&");
             document.getElementsByClassName("a" + ginf[w][0] + " b" + ginf[w][1])[0].classList.add("mine");
         }
-        document.getElementById("syls").innerText = ginf.length - 1;
+        lei = ginf.length - 1;
+        document.getElementById("syls").innerText = lei;
         var msk = getCookie("mask").split("");
         for (var v = 0; v < msk.length; v++) {
             if (msk[v] == "1") {
@@ -59,7 +60,7 @@ if (location.hash == "#custom") {
             }
         }
     } else {
-        document.getElementsByClassName("err")[1].display = "flex";
+        document.getElementsByClassName("err")[1].style.display = "flex";
     }
 } else if (location.hash != "#" && location.hash != "") {
     var list = location.hash.replace("#", "").split(","), lei = list[2];
@@ -244,14 +245,23 @@ function save() {
             str += "1";
         }
     }
-    if (getCookie("sved") == "true") {
+    if (getCookie("sved") == "true" && location.hash != "#continue") {
         setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
     }
     setCookie("game=" + list[0] + "x" + list[1] + ", " + leil.join(", "), "mask=" + str, "sved=true");
     chas("");
 }
 function kdow(event) {
-    if (event.key == "Escape") location.href = 'about:blank';
+    if (event.key == "Escape") {
+        if (location.hash == "#theme" || location.hash == "#custom" || location.hash == "#continue") {
+            chas("");
+        } else if (location.hash == "#" || !location.hash) {
+            location.href = 'about:blank';
+        }
+    }
+    if (event.key == "Enter" && location.hash == "#custom") {
+        goto(document.getElementById('len').value, document.getElementById('wdt').value, document.getElementById('mine').value);
+    }
     if (event.altKey) {
         switch (event.key) {
             case "e":

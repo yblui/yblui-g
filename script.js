@@ -23,13 +23,15 @@ if (location.hash == "#custom") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("them")[0].style.display = "flex";
     document.getElementsByClassName("game")[0].style.display = "none";
-    document.getElementsByClassName("winn")[0].innerText = getCookie("win").split(",")[0];
-    document.getElementsByClassName("total")[0].innerText = getCookie("total").split(",")[0];
-    document.getElementsByClassName("lju")[0].innerText = getCookie("lju").split(",")[0];
-    document.getElementsByClassName("zlju")[0].innerText = getCookie("zlju").split(",")[0];
-    document.getElementsByClassName("per")[0].innerText = (Number(getCookie("win").split(",")[0]) / Number(getCookie("total").split(",")[0]) * 100).toFixed(2) + "%";
-    if (getCookie("record") != "Infinity") document.getElementById("record").innerText = getCookie("record") + "s";
-    if (getCookie("total") == "0") document.getElementById("per").innerText = "0.00%";
+    for (var r = 0; r <= 3; r++) {
+        document.getElementsByClassName("winn")[r].innerText = getCookie("win").split(",")[r];
+        document.getElementsByClassName("total")[r].innerText = getCookie("total").split(",")[r];
+        document.getElementsByClassName("lju")[r].innerText = getCookie("lju").split(",")[r];
+        document.getElementsByClassName("zlju")[r].innerText = getCookie("zlju").split(",")[r];
+        document.getElementsByClassName("per")[r].innerText = (Number(getCookie("win").split(",")[r]) / Number(getCookie("total").split(",")[r]) * 100).toFixed(2) + "%";
+        if (getCookie("record") != "Infinity") document.getElementsByClassName("record")[r].innerText = getCookie("record") + "s";
+        if (getCookie("total") == "0") document.getElementsByClassName("per")[r].innerText = "0.00%";
+    }
 } else if (location.hash == "#err") {
     document.getElementsByClassName("main")[0].style.display = "none";
     document.getElementsByClassName("err")[0].style.display = "flex";
@@ -38,6 +40,7 @@ if (location.hash == "#custom") {
     if (getCookie("sved") == "true") {
         document.getElementsByClassName("game")[0].style.display = "block";
         var ginf = getCookie("game").split(", ");
+        var list = [ginf[0].split("x")[0], ginf[0].split("x")[0], ginf.length - 1], lei = list[2];
         for (var a = 0; a < Number(ginf[0].split("x")[0]); a++) {
             for (var b = 0; b < Number(ginf[0].split("x")[1]); b++) {
                 document.getElementById("boar").innerHTML += "<div class='grid a" + a + " b" + b + "' onclick='cheq(this)' data-a='" + a +
@@ -137,13 +140,24 @@ function cheq(a) {
         if (ckwi) {
             document.getElementById("win").style.display = "block";
             jshi = clearInterval(jshi);
-            setCookie("win=" + (Number(getCookie("win")) + 1), "total=" + (Number(getCookie("total")) + 1), "sved=false");
-            if (Number(getCookie("record")) > Number(document.getElementById("time").innerText.replace("s", ""))) {
+            if (location.hash == "#10,10,10" || (location.hash == "#continue" && list == [10, 10, 10])) {
+                var q = 0;
+            } else if (location.hash == "#20,20,20" || (location.hash == "#continue" && list == [10, 10, 10])) {
+                var q = 1;
+            } else if (location.hash == "#30,30,40" || (location.hash == "#continue" && list == [10, 10, 10])) {
+                var q = 2;
+            } else {
+                var q = 3;
+            }
+            setCookie("win=" + (Number(getCookie("win").split(",")[q]) + 1), "total=" + (Number(getCookie("total").split(",")[q]) + 1), "sved=false");
+            if (Number(getCookie("record").split(",")[q]) > Number(document.getElementById("time").innerText.replace("s", ""))) {
                 setCookie("record=" + document.getElementById("time").innerText.replace("s", ""));
                 document.getElementsByTagName("p")[0].style.display = "block";
             }
-            setCookie("lju=" + (Number(getCookie("lju")) + 1));
-            if ((Number(getCookie("lju")) + 1) > Number(getCookie("zlju"))) setCookie("zlju=" + getCookie("lju"));
+            var lju = getCookie("lju").split(",");
+            lju[q] = Number(lju[q]) + 1;
+            setCookie("lju=" + lju.join(","));
+            if ((Number(getCookie("lju")[q]) + 1) > Number(getCookie("zlju")[q])) setCookie("zlju=" + getCookie("lju"));
         }
     }
 }
@@ -210,13 +224,15 @@ function cthe(a) {
     }
 }
 function clea() {
-    setCookie("win=0", "total=0", "record=0", "lju=0", "zlju=0");
-    document.getElementById("winn").innerText = 0;
-    document.getElementById("total").innerText = 0;
-    document.getElementById("per").innerText = "0.00%";
-    document.getElementById("record").innerText = "0s";
-    document.getElementById("lju").innerText = 0;
-    document.getElementById("zlju").innerText = 0;
+    setCookie("win=0,0,0,0", "total=0,0,0,0", "record=Infinity", "lju=0,0,0,0", "zlju=0,0,0,0");
+    for (e = 0; e <= 4; e++) {
+        document.getElementsByClassName("winn")[e].innerText = 0;
+        document.getElementsByClassName("total")[e].innerText = 0;
+        document.getElementsByClassName("per")[e].innerText = "0.00%";
+        document.getElementsByClassName("record")[e].innerText = "0s";
+        document.getElementsByClassName("lju")[e].innerText = 0;
+        document.getElementsByClassName("zlju")[e].innerText = 0;
+    }
 }
 function gmfh(a) {
     if (document.getElementById("time").innerText != "0s") {

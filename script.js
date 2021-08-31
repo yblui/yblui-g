@@ -29,8 +29,8 @@ if (location.hash == "#custom") {
         document.getElementsByClassName("lju")[r].innerText = getCookie("lju").split(",")[r];
         document.getElementsByClassName("zlju")[r].innerText = getCookie("zlju").split(",")[r];
         document.getElementsByClassName("per")[r].innerText = (Number(getCookie("win").split(",")[r]) / Number(getCookie("total").split(",")[r]) * 100).toFixed(2) + "%";
-        if (getCookie("record") != "Infinity") document.getElementsByClassName("record")[r].innerText = getCookie("record") + "s";
-        if (getCookie("total") == "0") document.getElementsByClassName("per")[r].innerText = "0.00%";
+        if (getCookie("record").split(",")[r] != "Infinity") document.getElementsByClassName("record")[r].innerText = getCookie("record").split(",")[r] + "s";
+        if (getCookie("total").split(",")[r] == "0") document.getElementsByClassName("per")[r].innerText = "0.00%";
     }
 } else if (location.hash == "#err") {
     document.getElementsByClassName("main")[0].style.display = "none";
@@ -182,7 +182,7 @@ function qdmi(a) {
 }
 function biao(a, event) {
     if (event.which == 3 && a.id == "warn") {
-        setCookie("total=" + (getCookie("total") + 1));
+        setCookie("total=" + (Number(getCookie("total")) + 1), "game=9x9");
         chas("");
         return;
     }
@@ -268,44 +268,54 @@ function save() {
     chas("");
 }
 function kdow(event) {
+    event.preventDefault();
     if (event.key == "Escape") {
-        if (location.hash == "#theme" || location.hash == "#custom" || location.hash == "#continue") {
-            chas("");
-        } else if (location.hash == "#" || !location.hash) {
+        if (location.hash == "#" || !location.hash) {
             location.href = 'about:blank';
+        } else {
+            chas("");
         }
     }
     if (event.key == "Enter" && location.hash == "#custom") {
         goto(document.getElementById('len').value, document.getElementById('wdt').value, document.getElementById('mine').value);
     }
     if (event.altKey) {
-        switch (event.key) {
-            case "e":
-                chas("10,10,10");
-                break;
-            case "m":
-                chas("20,20,40");
-                break;
-            case "h":
-                chas("30,40,120");
-                break;
-            case "c":
-                chas("custom");
-                break;
-            case "s":
-                chas("theme");
-                break;
-            case "o":
-                chas("continue");
-                break;
-            case "b":
-                cthe(false);
-                break;
-            case "g":
-                cthe(true);
-                break;
-            case "l":
-                clea();
+        if (location.hash == "#" || !location.hash) {
+            switch (event.key) {
+                case "e":
+                    chas("10,10,10");
+                    break;
+                case "m":
+                    chas("20,20,40");
+                    break;
+                case "h":
+                    chas("30,40,120");
+                    break;
+                case "c":
+                    chas("custom");
+                    break;
+                case "s":
+                    chas("theme");
+                    break;
+                case "o":
+                    chas("continue");
+                    break;
+                case "v":
+                    location.href = "https://github.com/yblui/yblui-g";
+            }
+        } else if (location.hash == "#theme") {
+            switch (event.key) {
+                case "b":
+                    cthe(false);
+                    break;
+                case "g":
+                    cthe(true);
+                    break;
+                case "l":
+                    clea();
+            }
+        } else {
+            if (event.key == "n") gmfh(false);
         }
     }
 }

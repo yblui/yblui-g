@@ -19,13 +19,14 @@
         <div class="head">
             <h1>Yblui-g</h1>
         </div>
-        <div onclick="location.href='about:blank';">退出</div>
+        <div onclick="location.href = 'about:blank';">退出</div>
         <div onclick="goto(10,10,10);">简单(E)<span>10x10</span></div>
         <div onclick="goto(20,20,40);">中等(M)<span>20x20</span></div>
         <div onclick="goto(30,40,120);">困难(H)<span>30x40</span></div>
         <div onclick="chas('custom');">自定义(C)</div>
         <div onclick="chas('theme');">设置(S)</div>
         <div onclick="chas('continue');">继续未保存的游戏(O)</div>
+        <div onclick="location.href = 'https:\/\/github.com/yblui/yblui-g';">在GitHub上浏览(V)</div>
     </div>
     <div class="cont cust">
         <div class="head">
@@ -59,7 +60,7 @@
             <div onclick="gmfh(true);">返回到主页</div>
             <div>剩余雷数<span id="syls"></span></div>
             <div>用时<span id="time">0s</span></div>
-            <div onclick="gmfh(false);">新游戏</div>
+            <div onclick="gmfh(false);">新游戏(N)</div>
         </div>
         <div class="modl" id="over" onclick="history.go(0);">
             <div>

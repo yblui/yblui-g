@@ -6,8 +6,8 @@ function getCookie(b) {
     }
 }
 function setCookie() {
-    for (var d = 0; d < arguments.length; d++) {
-        document.cookie = arguments[d] + "; expires=Thu, 18 Dec 2043 12:00:00 GMT";
+    for(var d of arguments){
+        document.cookie = d + "; expires=Thu, 18 Dec 2043 12:00:00 GMT";
     }
 }
 var wdj = [], tim = 0, jshi;
@@ -115,8 +115,8 @@ function cheq(a) {
             for (var lsc = -1; lsc <= 1; lsc++) {
                 for (var lsd = -1; lsd <= 1; lsd++) {
                     var pd = true;
-                    for (var lse = 0; lse < wdj.length; lse++) {
-                        if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
+                    for(var lse of wdj){
+                        if (lse == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
                     }
                     if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document
                         .getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor !=
@@ -140,14 +140,15 @@ function cheq(a) {
         if (ckwi) {
             document.getElementById("win").style.display = "block";
             jshi = clearInterval(jshi);
+            var q;
             if (location.hash == "#10,10,10" || (location.hash == "#continue" && list == [10, 10, 10])) {
-                var q = 0;
+                q = 0;
             } else if (location.hash == "#20,20,20" || (location.hash == "#continue" && list == [10, 10, 10])) {
-                var q = 1;
+                q = 1;
             } else if (location.hash == "#30,30,40" || (location.hash == "#continue" && list == [10, 10, 10])) {
-                var q = 2;
+                q = 2;
             } else {
-                var q = 3;
+                q = 3;
             }
             setCookie("win=" + (Number(getCookie("win").split(",")[q]) + 1), "total=" + (Number(getCookie("total").split(",")[q]) + 1), "sved=false");
             if (Number(getCookie("record").split(",")[q]) > Number(document.getElementById("time").innerText.replace("s", ""))) {
@@ -171,6 +172,7 @@ function arou(a, b) {
     }
     return coun;
 }
+
 function qdmi(a) {
     document.getElementById("mine").max = Number(document.getElementById("len").value) * Number(document.getElementById("wdt").value);
     if (Number(a.value) > Number(a.max) || Number(a.value) < Number(a.min) || Number(document.getElementById("mine").value) < 0 || Number(document.getElementById(
@@ -180,6 +182,7 @@ function qdmi(a) {
         a.parentNode.parentNode.classList.remove("cfed");
     }
 }
+
 function biao(a, event) {
     if (event.which == 3 && a.id == "warn") {
         setCookie("total=" + (Number(getCookie("total")) + 1), "game=9x9");
@@ -199,8 +202,8 @@ function biao(a, event) {
         for (var lsc = -1; lsc <= 1; lsc++) {
             for (var lsd = -1; lsd <= 1; lsd++) {
                 var pd = true;
-                for (var lse = 0; lse < wdj.length; lse++) {
-                    if (wdj[lse] == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
+                for (var lse of wdj){
+                    if (lse == document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
                 }
                 if (document.getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
                     "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText == "?") pd = false;
@@ -212,6 +215,7 @@ function biao(a, event) {
     document.getElementById("syls").innerText = lei;
     return false;
 }
+
 function cthe(a) {
     if (a) {
         document.getElementsByTagName("html")[0].classList.add("green");
@@ -223,9 +227,10 @@ function cthe(a) {
         setCookie("theme=false");
     }
 }
+
 function clea() {
     setCookie("win=0,0,0,0", "total=0,0,0,0", "record=Infinity", "lju=0,0,0,0", "zlju=0,0,0,0");
-    for (e = 0; e <= 4; e++) {
+    for (var e = 0; e <= 4; e++) {
         document.getElementsByClassName("winn")[e].innerText = 0;
         document.getElementsByClassName("total")[e].innerText = 0;
         document.getElementsByClassName("per")[e].innerText = "0.00%";
@@ -234,32 +239,29 @@ function clea() {
         document.getElementsByClassName("zlju")[e].innerText = 0;
     }
 }
+
 function gmfh(a) {
     if (document.getElementById("time").innerText != "0s") {
         document.getElementById("warn").style.display = "block";
         setTimeout(function () {
             document.getElementById("warn").style.display = "none";
         }, 3000)
-    } else if (a) {
-        chas("");
-    } else {
+    } else if (a) chas("");
+    else {
         if (location.hash == "#continue") chas("10,10,10");
         history.go(0);
     }
 }
+
 function save() {
     var leil = [], str = "";
-    for (var i = 0; i < document.getElementsByClassName("mine").length; i++) {
-        leil[leil.length] = document.getElementsByClassName("mine")[i].dataset.a + "&" + document.getElementsByClassName("mine")[i].dataset.b;
+    for (var i of document.getElementsByClassName("mine")) {
+        leil[leil.length] = i.dataset.a + "&" + i.dataset.b;
     }
-    for (var j = 0; j < document.getElementsByClassName("grid").length; j++) {
-        if (document.getElementsByClassName("grid")[j].innerText == "?") {
-            str += "2";
-        } else if (!document.getElementsByClassName("grid")[j].style.backgroundColor && !document.getElementsByClassName("grid")[j].innerText) {
-            str += "0";
-        } else {
-            str += "1";
-        }
+    for (var j of document.getElementsByClassName("grid")) {
+        if (j.innerText == "?") str += "2";
+        else if (!j.style.backgroundColor && !j.innerText) str += "0";
+        else str += "1";
     }
     if (getCookie("sved") == "true" && location.hash != "#continue") {
         setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
@@ -267,6 +269,7 @@ function save() {
     setCookie("game=" + list[0] + "x" + list[1] + ", " + leil.join(", "), "mask=" + str, "sved=true");
     chas("");
 }
+
 function kdow(event) {
     event.preventDefault();
     if (event.key == "Escape") {

@@ -89,7 +89,7 @@ if (location.hash == "#custom") {
         $("#boar").innerHTML += "<br />";
     }
     while ($(".mine").length != Number(list[2])) {
-        var tem = Math.floor(Math.random() * $(".mine").length);
+        var tem = Math.floor(window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296 * $(".mine").length);
         $(".mine")[tem].className = $(".mine")[tem].className.replace("mine", "");
     }
     $("#syls").innerText = lei;
@@ -159,7 +159,7 @@ function cheq(a) {
             setCookie("win=" + (Number(getCookie("win").split(",")[q]) + 1), "total=" + (Number(getCookie("total").split(",")[q]) + 1), "sved=false");
             if (Number(getCookie("record").split(",")[q]) > Number($("#time").innerText.replace("s", ""))) {
                 setCookie("record=" + $("#time").innerText.replace("s", ""));
-                document.getElementsByTagName("p")[0].style.display = "block";
+                $("p")[0].style.display = "block";
             }
             var lju = getCookie("lju").split(",");
             lju[q] = Number(lju[q]) + 1;
@@ -168,11 +168,12 @@ function cheq(a) {
         }
     }
 }
+
 function arou(aa, ab) {
     var coun = 0;
     for (var lsc = -1; lsc <= 1; lsc++) {
         for (var lsd = -1; lsd <= 1; lsd++) {
-            if ($(".a" + (aa + lsc) + " b" + (bb + lsd))[0] && $(".a" + (aa + lsc) + " b" + (bb + lsd))[0].classList.contains("mine")) coun++;
+            if ($(".a" + (aa + lsc) + " b" + (ab + lsd))[0] && $(".a" + (aa + lsc) + " b" + (ab + lsd))[0].classList.contains("mine")) coun++;
         }
     }
     return coun;
@@ -180,12 +181,10 @@ function arou(aa, ab) {
 
 function qdmi(a) {
     $("#mine").max = Number($("#len").value) * Number($("#wdt").value);
-    if (Number(a.value) > Number(a.max) || Number(a.value) < Number(a.min) || Number($("#mine").value) < 0 || Number(document.getElementById(
-        "mine").value) > Number($("#len").value) * Number($("#wdt").value)) {
+    if (Number(a.value) > Number(a.max) || Number(a.value) < Number(a.min) || Number($("#mine").value) < 0 || Number($("#mine").value) >
+        Number($("#len").value) * Number($("#wdt").value)) {
         a.parentNode.parentNode.classList.add("cfed");
-    } else {
-        a.parentNode.parentNode.classList.remove("cfed");
-    }
+    } else a.parentNode.parentNode.classList.remove("cfed");
 }
 
 function biao(a, event) {
@@ -213,7 +212,10 @@ function biao(a, event) {
                 if ($(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
                     "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText == "?") pd = false;
                 if ($(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
-                    "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
+                    "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && $(".a" +
+                        (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && $(".a" +
+                            (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = $(".a" +
+                                (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
             }
         }
     }
@@ -223,12 +225,12 @@ function biao(a, event) {
 
 function cthe(a) {
     if (a) {
-        document.getElementsByTagName("html")[0].classList.add("green");
-        document.getElementsByTagName("html")[0].classList.remove("blue");
+        $("html")[0].classList.add("green");
+        $("html")[0].classList.remove("blue");
         setCookie("theme=true");
     } else {
-        document.getElementsByTagName("html")[0].classList.remove("green");
-        document.getElementsByTagName("html")[0].classList.add("blue");
+        $("html")[0].classList.remove("green");
+        $("html")[0].classList.add("blue");
         setCookie("theme=false");
     }
 }
@@ -260,17 +262,13 @@ function gmfh(a) {
 
 function save() {
     var leil = [], str = "";
-    for (var i of $(".mine")) {
-        leil[leil.length] = i.dataset.a + "&" + i.dataset.b;
-    }
+    for (var i of $(".mine")) leil[leil.length] = i.dataset.a + "&" + i.dataset.b;
     for (var j of $(".grid")) {
         if (j.innerText == "?") str += "2";
         else if (!j.style.backgroundColor && !j.innerText) str += "0";
         else str += "1";
     }
-    if (getCookie("sved") == "true" && location.hash != "#continue") {
-        setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
-    }
+    if (getCookie("sved") == "true" && location.hash != "#continue") setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
     setCookie("game=" + list[0] + "x" + list[1] + ", " + leil.join(", "), "mask=" + str, "sved=true");
     chas("");
 }
@@ -278,11 +276,8 @@ function save() {
 function kdow(event) {
     event.preventDefault();
     if (event.key == "Escape") {
-        if (location.hash == "#" || !location.hash) {
-            location.href = 'about:blank';
-        } else {
-            chas("");
-        }
+        if (location.hash == "#" || !location.hash) location.href = 'about:blank';
+        else chas("");
     }
     if (event.key == "Enter" && location.hash == "#custom") {
         goto(document.getElementById('len').value, document.getElementById('wdt').value, document.getElementById('mine').value);
@@ -322,8 +317,6 @@ function kdow(event) {
                 case "l":
                     clea();
             }
-        } else {
-            if (event.key == "n") gmfh(false);
-        }
+        } else if (event.key == "n") gmfh(false);
     }
 }

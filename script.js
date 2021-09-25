@@ -1,15 +1,13 @@
-function getCookie(b) {
+function getCookie(gb) {
     var c = document.cookie.split("; ");
     for (var d = 0; d < c.length; d++) {
         c[d] = c[d].split("=");
-        if (c[d][0] == b) return c[d][1];
+        if (c[d][0] == gb) return c[d][1];
     }
 }
 
 function setCookie() {
-    for (var d of arguments) {
-        document.cookie = d + "; expires=Thu, 18 Dec 2043 12:00:00 GMT";
-    }
+    for (var d of arguments) document.cookie = d + "; expires=Thu, 18 Dec 2043 12:00:00 GMT";
 }
 
 function $($a) {
@@ -64,20 +62,15 @@ if (location.hash == "#custom") {
         $("#syls").innerText = lei;
         var msk = getCookie("mask").split("");
         for (var v = 0; v < msk.length; v++) {
-            if (msk[v] == "1") {
-                cheq($(".grid")[v]);
-            } else if (msk[v] == "2") {
-                $(".grid")[v].innerText = "?";
-            }
+            if (msk[v] == "1") cheq($(".grid")[v]);
+            else if (msk[v] == "2") $(".grid")[v].innerText = "?";
         }
     } else {
         $(".err")[1].style.display = "flex";
     }
 } else if (location.hash != "#" && location.hash != "") {
     var list = location.hash.replace("#", "").split(","), lei = list[2];
-    if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) {
-        chas("err");
-    }
+    if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) chas("err");
     $(".main")[0].style.display = "none";
     $(".cust")[0].style.display = "none";
     $(".game")[0].style.display = "block";
@@ -99,41 +92,41 @@ setInterval(() => {
     wdj.shift();
 }, 10);
 
-function chas(a) {
-    location.hash = "#" + a;
+function chas(ca) {
+    location.hash = "#" + ca;
     history.go(0);
 }
 
-function goto(a, b, c) {
-    chas(a + "," + b + "," + c);
+function goto(oa, ob, oc) {
+    chas(oa + "," + ob + "," + oc);
 }
 
-function cheq(a) {
-    if (a && a.innerText != "?") {
-        if (a.classList.contains("mine") && $("#over").style.display != "block") {
-            a.className += " cfed";
-            a.innerText = "X";
+function cheq(ha) {
+    if (ha && ha.innerText != "?") {
+        if (ha.classList.contains("mine") && $("#over").style.display != "block") {
+            ha.className += " cfed";
+            ha.innerText = "X";
             jshi = clearInterval(jshi);
             $("#over").style.display = "block";
             setCookie("total=" + (Number(getCookie("total")) + 1), "lju=0");
             if (location.hash == "#continue") setCookie("sved=false");
-        } else if (arou(Number(a.dataset.a), Number(a.dataset.b))) {
-            a.style.backgroundColor = "#E6C460";
-            a.style.color = "black";
-            a.innerText = arou(Number(a.dataset.a), Number(a.dataset.b));
+        } else if (arou(Number(ha.dataset.a), Number(ha.dataset.b))) {
+            ha.style.backgroundColor = "#E6C460";
+            ha.style.color = "black";
+            ha.innerText = arou(Number(ha.dataset.a), Number(ha.dataset.b));
         } else {
-            a.style.backgroundColor = "white";
+            ha.style.backgroundColor = "white";
             for (var lsc = -1; lsc <= 1; lsc++) {
                 for (var lsd = -1; lsd <= 1; lsd++) {
                     var pd = true;
                     for (var lse of wdj) {
-                        if (lse == $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
+                        if (lse == $(".a" + (Number(ha.dataset.a) + lsc) + " b" + (Number(ha.dataset.b) + lsd))[0]) pd = false;
                     }
-                    if ($(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document
-                        .getElementsByClassName("a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor !=
-                        "white" && $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor
-                        != "#E6C460" && $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText
-                        != "X" && pd) wdj[wdj.length] = $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
+                    if ($(".a" + (Number(ha.dataset.a) + lsc) + " b" + (Number(ha.dataset.b) + lsd))[0] && $(".a" + (Number(ha.dataset.a) + lsc) +
+                        " b" + (Number(ha.dataset.b) + lsd))[0].style.backgroundColor != "white" && $(".a" + (Number(ha.dataset.a) + lsc) + " b" +
+                        (Number(ha.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && $(".a" + (Number(ha.dataset.a) + lsc) + " b" +
+                        (Number(ha.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = $(".a" + (Number(ha.dataset.a) + lsc) + " b" +
+                        (Number(ha.dataset.b) + lsd))[0];
                 }
             }
         }
@@ -179,12 +172,12 @@ function arou(aa, ab) {
     return coun;
 }
 
-function qdmi(a) {
+function qdmi(qa) {
     $("#mine").max = Number($("#len").value) * Number($("#wdt").value);
-    if (Number(a.value) > Number(a.max) || Number(a.value) < Number(a.min) || Number($("#mine").value) < 0 || Number($("#mine").value) >
+    if (Number(qa.value) > Number(qa.max) || Number(qa.value) < Number(qa.min) || Number($("#mine").value) < 0 || Number($("#mine").value) >
         Number($("#len").value) * Number($("#wdt").value)) {
-        a.parentNode.parentNode.classList.add("cfed");
-    } else a.parentNode.parentNode.classList.remove("cfed");
+        qa.parentNode.parentNode.classList.add("cfed");
+    } else qa.parentNode.parentNode.classList.remove("cfed");
 }
 
 function biao(a, event) {
@@ -225,12 +218,12 @@ function biao(a, event) {
 
 function cthe(a) {
     if (a) {
-        $("html")[0].classList.add("green");
-        $("html")[0].classList.remove("blue");
+        $("html").classList.add("green");
+        $("html").classList.remove("blue");
         setCookie("theme=true");
     } else {
-        $("html")[0].classList.remove("green");
-        $("html")[0].classList.add("blue");
+        $("html").classList.remove("green");
+        $("html").classList.add("blue");
         setCookie("theme=false");
     }
 }

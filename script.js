@@ -23,12 +23,12 @@ if (!document.cookie) {
 }
 cthe(getCookie("theme") == "true");
 if (location.hash == "#custom") {
-    $(".main")[0].style.display = "none";
-    $(".cust")[0].style.display = "flex";
+    $(".main").style.display = "none";
+    $(".cust").style.display = "flex";
 } else if (location.hash == "#theme") {
-    $(".main")[0].style.display = "none";
-    $(".them")[0].style.display = "flex";
-    $(".game")[0].style.display = "none";
+    $(".main").style.display = "none";
+    $(".them").style.display = "flex";
+    $(".game").style.display = "none";
     for (var r = 0; r <= 3; r++) {
         $(".winn")[r].innerText = getCookie("win").split(",")[r];
         $(".total")[r].innerText = getCookie("total").split(",")[r];
@@ -39,12 +39,12 @@ if (location.hash == "#custom") {
         if (getCookie("total").split(",")[r] == "0") $(".per")[r].innerText = "0.00%";
     }
 } else if (location.hash == "#err") {
-    $(".main")[0].style.display = "none";
+    $(".main").style.display = "none";
     $(".err")[0].style.display = "flex";
 } else if (location.hash == "#continue") {
-    $(".main")[0].style.display = "none";
+    $(".main").style.display = "none";
     if (getCookie("sved") == "true") {
-        $(".game")[0].style.display = "block";
+        $(".game").style.display = "block";
         var ginf = getCookie("game").split(", ");
         var list = [ginf[0].split("x")[0], ginf[0].split("x")[0], ginf.length - 1], lei = list[2];
         for (a = 0; a < Number(ginf[0].split("x")[0]); a++) {
@@ -56,7 +56,7 @@ if (location.hash == "#custom") {
         }
         for (var w = 1; w < ginf.length; w++) {
             ginf[w] = ginf[w].split("&");
-            $(".a" + ginf[w][0] + " b" + ginf[w][1])[0].classList.add("mine");
+            $(".a" + ginf[w][0] + ".b" + ginf[w][1]).classList.add("mine");
         }
         lei = ginf.length - 1;
         $("#syls").innerText = lei;
@@ -65,15 +65,13 @@ if (location.hash == "#custom") {
             if (msk[v] == "1") cheq($(".grid")[v]);
             else if (msk[v] == "2") $(".grid")[v].innerText = "?";
         }
-    } else {
-        $(".err")[1].style.display = "flex";
-    }
+    } else $(".err")[1].style.display = "flex";
 } else if (location.hash != "#" && location.hash != "") {
     var list = location.hash.replace("#", "").split(","), lei = list[2];
     if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) chas("err");
-    $(".main")[0].style.display = "none";
-    $(".cust")[0].style.display = "none";
-    $(".game")[0].style.display = "block";
+    $(".main").style.display = "none";
+    $(".cust").style.display = "none";
+    $(".game").style.display = "block";
     for (a = 0; a < Number(list[0]); a++) {
         for (var b = 0; b < Number(list[1]); b++) {
             $("#boar").innerHTML += "<div class='mine grid a" + a + " b" + b + "' onclick='cheq(this)' data-a='" + a +
@@ -120,13 +118,13 @@ function cheq(ha) {
                 for (var lsd = -1; lsd <= 1; lsd++) {
                     var pd = true;
                     for (var lse of wdj) {
-                        if (lse == $(".a" + (Number(ha.dataset.a) + lsc) + " b" + (Number(ha.dataset.b) + lsd))[0]) pd = false;
+                        if (lse == $(".a" + (Number(ha.dataset.a) + lsc) + ".b" + (Number(ha.dataset.b) + lsd))) pd = false;
                     }
-                    if ($(".a" + (Number(ha.dataset.a) + lsc) + " b" + (Number(ha.dataset.b) + lsd))[0] && $(".a" + (Number(ha.dataset.a) + lsc) +
-                        " b" + (Number(ha.dataset.b) + lsd))[0].style.backgroundColor != "white" && $(".a" + (Number(ha.dataset.a) + lsc) + " b" +
-                        (Number(ha.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && $(".a" + (Number(ha.dataset.a) + lsc) + " b" +
-                        (Number(ha.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = $(".a" + (Number(ha.dataset.a) + lsc) + " b" +
-                        (Number(ha.dataset.b) + lsd))[0];
+                    if ($(".a" + (Number(ha.dataset.a) + lsc) + ".b" + (Number(ha.dataset.b) + lsd)) && $(".a" + (Number(ha.dataset.a) + lsc) +
+                        ".b" + (Number(ha.dataset.b) + lsd)).style.backgroundColor != "white" && $(".a" + (Number(ha.dataset.a) + lsc) + ".b" +
+                            (Number(ha.dataset.b) + lsd)).style.backgroundColor != "#E6C460" && $(".a" + (Number(ha.dataset.a) + lsc) + ".b" +
+                                (Number(ha.dataset.b) + lsd)).innerText != "X" && pd) wdj[wdj.length] = $(".a" + (Number(ha.dataset.a) + lsc) + ".b" +
+                                    (Number(ha.dataset.b) + lsd));
                 }
             }
         }
@@ -180,35 +178,35 @@ function qdmi(qa) {
     } else qa.parentNode.parentNode.classList.remove("cfed");
 }
 
-function biao(a, event) {
-    if (event.which == 3 && a.id == "warn") {
+function biao(ba, event) {
+    if (event.which == 3 && ba.id == "warn") {
         setCookie("total=" + (Number(getCookie("total")) + 1), "game=9x9");
         chas("");
         return;
     }
-    if (event.which == 3 && !a.innerText) {
-        a.innerText = "?";
+    if (event.which == 3 && !ba.innerText) {
+        ba.innerText = "?";
         lei--;
-    } else if (event.which == 3 && a.innerText == "?") {
-        a.innerText = "";
+    } else if (event.which == 3 && ba.innerText == "?") {
+        ba.innerText = "";
         lei++;
     } else if (event.which == 2) {
-        if (a.innerText == "?") return;
+        if (ba.innerText == "?") return;
         event.preventDefault();
-        cheq(a);
+        cheq(ba);
         for (var lsc = -1; lsc <= 1; lsc++) {
             for (var lsd = -1; lsd <= 1; lsd++) {
                 var pd = true;
                 for (var lse of wdj) {
-                    if (lse == $(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0]) pd = false;
+                    if (lse == $(".a" + (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd))) pd = false;
                 }
-                if ($(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
-                    "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText == "?") pd = false;
-                if ($(".a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0] && document.getElementsByClassName(
-                    "a" + (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "white" && $(".a" +
-                        (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].style.backgroundColor != "#E6C460" && $(".a" +
-                            (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0].innerText != "X" && pd) wdj[wdj.length] = $(".a" +
-                                (Number(a.dataset.a) + lsc) + " b" + (Number(a.dataset.b) + lsd))[0];
+                if ($(".a" + (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd)) && $(
+                    ".a" + (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd)).innerText == "?") pd = false;
+                if ($(".a" + (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd)) && $(
+                    ".a" + (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd)).style.backgroundColor != "white" && $(".a" +
+                        (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd)).style.backgroundColor != "#E6C460" && $(".a" +
+                            (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd)).innerText != "X" && pd) wdj[wdj.length] = $(".a" +
+                                (Number(ba.dataset.a) + lsc) + ".b" + (Number(ba.dataset.b) + lsd));
             }
         }
     }

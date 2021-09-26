@@ -15,7 +15,7 @@ function $($a) {
     else return document.querySelectorAll($a);
 }
 
-var wdj = [], tim = 0, jshi, a;
+var wdj = [], tim = 0, jshi, a, b, list, lei;
 if (!document.cookie) {
     setCookie("theme=false", "win=0,0,0,0", "total=0,0,0,0", "record=Infinity,Infinity,Infinity,Infinity", "lju=0,0,0,0", "zlju=0,0,0,0",
         "expires=Thu, 18 Dec 2043 12:00:00 GMT", "game=9x9", "mask=000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -46,9 +46,10 @@ if (location.hash == "#custom") {
     if (getCookie("sved") == "true") {
         $(".game").style.display = "block";
         var ginf = getCookie("game").split(", ");
-        var list = [ginf[0].split("x")[0], ginf[0].split("x")[0], ginf.length - 1], lei = list[2];
+        list = [ginf[0].split("x")[0], ginf[0].split("x")[0], ginf.length - 1];
+        lei = list[2];
         for (a = 0; a < Number(ginf[0].split("x")[0]); a++) {
-            for (var b = 0; b < Number(ginf[0].split("x")[1]); b++) {
+            for (b = 0; b < Number(ginf[0].split("x")[1]); b++) {
                 $("#boar").innerHTML += "<div class='grid a" + a + " b" + b + "' onclick='cheq(this)' data-a='" + a +
                     "' data-b='" + b + "' onmousedown='biao(this,event)'></div>";
             }
@@ -67,13 +68,14 @@ if (location.hash == "#custom") {
         }
     } else $(".err")[1].style.display = "flex";
 } else if (location.hash != "#" && location.hash != "") {
-    var list = location.hash.replace("#", "").split(","), lei = list[2];
+    list = location.hash.replace("#", "").split(",");
+    lei = list[2];
     if (list[0] < 9 || list[0] > 40 || list[1] < 9 || list[1] > 40 || list[2] > list[0] * list[1]) chas("err");
     $(".main").style.display = "none";
     $(".cust").style.display = "none";
     $(".game").style.display = "block";
     for (a = 0; a < Number(list[0]); a++) {
-        for (var b = 0; b < Number(list[1]); b++) {
+        for (b = 0; b < Number(list[1]); b++) {
             $("#boar").innerHTML += "<div class='mine grid a" + a + " b" + b + "' onclick='cheq(this)' data-a='" + a +
                 "' data-b='" + b + "' onmousedown='biao(this,event)'></div>";
         }
@@ -89,14 +91,11 @@ setInterval(() => {
     cheq(wdj[0]);
     wdj.shift();
 }, 10);
+var goto = (oa, ob, oc) => chas(oa + "," + ob + "," + oc);
 
 function chas(ca) {
     location.hash = "#" + ca;
     history.go(0);
-}
-
-function goto(oa, ob, oc) {
-    chas(oa + "," + ob + "," + oc);
 }
 
 function cheq(ha) {
@@ -135,9 +134,8 @@ function cheq(ha) {
             }, 1000)
         }
         var ckwi = true;
-        for (var lswi = 0; lswi < $("#boar").getElementsByTagName("div").length; lswi++) {
-            if (!$("#boar").getElementsByTagName("div")[lswi].classList.contains("mine") && !document.getElementById(
-                "boar").getElementsByTagName("div")[lswi].style.backgroundColor) ckwi = false;
+        for (var lswi of $("#boar div")) {
+            if (!lswi.classList.contains("mine") && !lswi.style.backgroundColor) ckwi = false;
         }
         if (ckwi) {
             $("#win").style.display = "block";
@@ -214,8 +212,8 @@ function biao(ba, event) {
     return false;
 }
 
-function cthe(a) {
-    if (a) {
+function cthe(ca) {
+    if (ca) {
         $("html").classList.add("green");
         $("html").classList.remove("blue");
         setCookie("theme=true");
@@ -238,13 +236,11 @@ function clea() {
     }
 }
 
-function gmfh(a) {
+function gmfh(ga) {
     if ($("#time").innerText != "0s") {
         $("#warn").style.display = "block";
-        setTimeout(function () {
-            $("#warn").style.display = "none";
-        }, 3000)
-    } else if (a) chas("");
+        setTimeout(() => $("#warn").style.display = "none", 3000);
+    } else if (ga) chas("");
     else {
         if (location.hash == "#continue") chas("10,10,10");
         history.go(0);
@@ -271,7 +267,7 @@ function kdow(event) {
         else chas("");
     }
     if (event.key == "Enter" && location.hash == "#custom") {
-        goto(document.getElementById('len').value, document.getElementById('wdt').value, document.getElementById('mine').value);
+        goto($('#len').value, $('#wdt').value, $('#mine').value);
     }
     if (event.altKey) {
         if (location.hash == "#" || !location.hash) {

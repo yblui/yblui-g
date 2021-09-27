@@ -20,9 +20,9 @@
             <h1>Yblui-g</h1>
         </div>
         <div onclick="location.href = 'about:blank';">退出</div>
-        <div onclick="goto(10,10,10);">简单(E)<span>10x10</span></div>
-        <div onclick="goto(20,20,40);">中等(M)<span>20x20</span></div>
-        <div onclick="goto(30,40,120);">困难(H)<span>30x40</span></div>
+        <div onclick="goto(10, 10, 10);">简单(E)<span>10x10</span></div>
+        <div onclick="goto(20, 20, 40);">中等(M)<span>20x20</span></div>
+        <div onclick="goto(30, 40, 120);">困难(H)<span>30x40</span></div>
         <div onclick="chas('custom');">自定义(C)</div>
         <div onclick="chas('theme');">设置(S)</div>
         <div onclick="chas('continue');">继续未保存的游戏(O)</div>
@@ -51,8 +51,7 @@
                 <input type="number" value="9" id="mine" min="1" max="81" oninput="qdmi(this);" />
             </label>
         </div>
-        <div
-            onclick="goto($('#len').value, $('#wdt').value, $('#mine').value);">
+        <div onclick="goto($('#len').value, $('#wdt').value, $('#mine').value);">
             确定</div>
     </div>
     <div class="cont game">
@@ -138,14 +137,18 @@
         <div class="head">
             <h1>错误提示</h1>
         </div>
-        <div onclick="chas('custom');">你输入的数值不符合要求，盘面的长、宽均应大于或等于9且长小于或等于40，宽小于或等于30.<br />
-            点击此处返回.</div>
+        <div onclick="chas('custom');">
+            你输入的数值不符合要求，盘面的长、宽均应大于或等于9且长小于或等于40，宽小于或等于30.<br />
+            点击此处返回.
+        </div>
     </div>
     <div class="cont err">
         <div class="head">
             <h1>错误提示</h1>
         </div>
-        <div onclick="chas('');">没有未保存的游戏, 点击此处返回.</div>
+        <div onclick="chas('');">
+            没有未保存的游戏, 点击此处返回.
+        </div>
     </div>
     <span id="link">Yblui.github.io</span>
     <script src="script.js"></script>

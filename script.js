@@ -128,10 +128,10 @@ function cheq(ha) {
             }
         }
         if (!jshi && $("#over").style.display != "block" && $("#win").style.display != "block") {
-            jshi = setInterval(function () {
+            jshi = setInterval(() => {
                 tim++;
                 $("#time").innerText = tim + "s";
-            }, 1000)
+            }, 1000);
         }
         var ckwi = true;
         for (var lswi of $("#boar div")) {
@@ -162,7 +162,7 @@ function arou(aa, ab) {
     var coun = 0;
     for (var lsc = -1; lsc <= 1; lsc++) {
         for (var lsd = -1; lsd <= 1; lsd++) {
-            if ($(".a" + (aa + lsc) + " b" + (ab + lsd))[0] && $(".a" + (aa + lsc) + " b" + (ab + lsd))[0].classList.contains("mine")) coun++;
+            if ($(".a" + (aa + lsc) + ".b" + (ab + lsd)) && $(".a" + (aa + lsc) + ".b" + (ab + lsd)).classList.contains("mine")) coun++;
         }
     }
     return coun;
@@ -216,16 +216,15 @@ function cthe(ca) {
     if (ca) {
         $("html").classList.add("green");
         $("html").classList.remove("blue");
-        setCookie("theme=true");
     } else {
         $("html").classList.remove("green");
         $("html").classList.add("blue");
-        setCookie("theme=false");
     }
+    setCookie("theme=" + ca.toString());
 }
 
 function clea() {
-    setCookie("win=0,0,0,0", "total=0,0,0,0", "record=Infinity", "lju=0,0,0,0", "zlju=0,0,0,0");
+    setCookie("win=0,0,0,0", "total=0,0,0,0", "record=Infinity,Infinity,Infinity,Infinity", "lju=0,0,0,0", "zlju=0,0,0,0");
     for (var e = 0; e <= 4; e++) {
         $(".winn")[e].innerText = 0;
         $(".total")[e].innerText = 0;
